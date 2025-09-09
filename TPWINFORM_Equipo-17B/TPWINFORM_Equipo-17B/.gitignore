@@ -1,0 +1,16 @@
+# Carpetas de configuración de VS
+.vs/
+.vscode/
+
+# Archivos de usuario
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Archivos de caché e índices
+*.vsidx
+
+# Archivos de compilación
+bin/
+obj/
