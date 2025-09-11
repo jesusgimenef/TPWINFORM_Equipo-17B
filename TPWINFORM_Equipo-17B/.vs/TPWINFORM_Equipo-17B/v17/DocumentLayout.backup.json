@@ -1,9 +1,17 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\jesus\\OneDrive\\Escritorio\\Proyectos\\Github\\TPWINFORM_Equipo-17B\\TPWINFORM_Equipo-17B\\",
+  "WorkspaceRootPath": "D:\\Program Files\\GitHub\\Proyectos GITHUB\\TPWINFORM_Equipo-17B\\TPWINFORM_Equipo-17B\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{5DE3DE03-84EB-4B58-B0C9-A4B7E2EB12D4}|TPWINFORM_Equipo-17B\\TPWINFORM_Equipo-17B.csproj|c:\\users\\jesus\\onedrive\\escritorio\\proyectos\\github\\tpwinform_equipo-17b\\tpwinform_equipo-17b\\tpwinform_equipo-17b\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{284F7297-C2AB-4E2A-B518-E915B86C4BC4}|Negocio\\Negocio.csproj|d:\\program files\\github\\proyectos github\\tpwinform_equipo-17b\\tpwinform_equipo-17b\\negocio\\accesodatos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{284F7297-C2AB-4E2A-B518-E915B86C4BC4}|Negocio\\Negocio.csproj|solutionrelative:negocio\\accesodatos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B2E20DD0-1232-4D29-A34D-95EFBEEA9322}|Dominio\\Dominio.csproj|d:\\program files\\github\\proyectos github\\tpwinform_equipo-17b\\tpwinform_equipo-17b\\dominio\\marcas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B2E20DD0-1232-4D29-A34D-95EFBEEA9322}|Dominio\\Dominio.csproj|solutionrelative:dominio\\marcas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5DE3DE03-84EB-4B58-B0C9-A4B7E2EB12D4}|TPWINFORM_Equipo-17B\\TPWINFORM_Equipo-17B.csproj|D:\\Program Files\\GitHub\\Proyectos GITHUB\\TPWINFORM_Equipo-17B\\TPWINFORM_Equipo-17B\\tpwinform_equipo-17b\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{5DE3DE03-84EB-4B58-B0C9-A4B7E2EB12D4}|TPWINFORM_Equipo-17B\\TPWINFORM_Equipo-17B.csproj|solutionrelative:tpwinform_equipo-17b\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
@@ -14,15 +22,41 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Marcas.cs",
+              "DocumentMoniker": "D:\\Program Files\\GitHub\\Proyectos GITHUB\\TPWINFORM_Equipo-17B\\TPWINFORM_Equipo-17B\\Dominio\\Marcas.cs",
+              "RelativeDocumentMoniker": "Dominio\\Marcas.cs",
+              "ToolTip": "D:\\Program Files\\GitHub\\Proyectos GITHUB\\TPWINFORM_Equipo-17B\\TPWINFORM_Equipo-17B\\Dominio\\Marcas.cs",
+              "RelativeToolTip": "Dominio\\Marcas.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-11T01:52:17.726Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "AccesoDatos.cs",
+              "DocumentMoniker": "D:\\Program Files\\GitHub\\Proyectos GITHUB\\TPWINFORM_Equipo-17B\\TPWINFORM_Equipo-17B\\Negocio\\AccesoDatos.cs",
+              "RelativeDocumentMoniker": "Negocio\\AccesoDatos.cs",
+              "ToolTip": "D:\\Program Files\\GitHub\\Proyectos GITHUB\\TPWINFORM_Equipo-17B\\TPWINFORM_Equipo-17B\\Negocio\\AccesoDatos.cs",
+              "RelativeToolTip": "Negocio\\AccesoDatos.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABMAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-10T00:55:48.731Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "Form1.cs [Dise\u00F1o]",
-              "DocumentMoniker": "C:\\Users\\jesus\\OneDrive\\Escritorio\\Proyectos\\Github\\TPWINFORM_Equipo-17B\\TPWINFORM_Equipo-17B\\TPWINFORM_Equipo-17B\\Form1.cs",
+              "DocumentMoniker": "D:\\Program Files\\GitHub\\Proyectos GITHUB\\TPWINFORM_Equipo-17B\\TPWINFORM_Equipo-17B\\TPWINFORM_Equipo-17B\\Form1.cs",
               "RelativeDocumentMoniker": "TPWINFORM_Equipo-17B\\Form1.cs",
-              "ToolTip": "C:\\Users\\jesus\\OneDrive\\Escritorio\\Proyectos\\Github\\TPWINFORM_Equipo-17B\\TPWINFORM_Equipo-17B\\TPWINFORM_Equipo-17B\\Form1.cs [Dise\u00F1o]",
+              "ToolTip": "D:\\Program Files\\GitHub\\Proyectos GITHUB\\TPWINFORM_Equipo-17B\\TPWINFORM_Equipo-17B\\TPWINFORM_Equipo-17B\\Form1.cs [Dise\u00F1o]",
               "RelativeToolTip": "TPWINFORM_Equipo-17B\\Form1.cs [Dise\u00F1o]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-09T23:37:43.935Z",
