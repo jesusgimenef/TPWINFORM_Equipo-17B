@@ -12,8 +12,10 @@ using Negocio;
 
 namespace TPWINFORM_Equipo_17B
 {
+
     public partial class Form1 : Form
     {
+        private List<Articulo> listaArticulos;
         public Form1()
         {
             InitializeComponent();
@@ -26,13 +28,13 @@ namespace TPWINFORM_Equipo_17B
 
         private void cargar()
         {
-            PokemonNegocio negocio = new PokemonNegocio();
+            ArticuloNegocio negocio = new ArticuloNegocio();
             try
             {
-                listaPokemon = negocio.listar();
-                dgvPokemons.DataSource = listaPokemon;
-                dgvPokemons.Columns["UrlImagen"].Visible = false;
-                cargarImagen(listaPokemon[0].UrlImagen);
+                listaArticulos = negocio.listar();
+                dgvArticulos.DataSource = listaArticulos;
+                //dgvArticulos.Columns["UrlImagen"].Visible = false;
+                //cargarImagen(listaPokemon[0].UrlImagen);
             }
             catch (Exception ex)
             {

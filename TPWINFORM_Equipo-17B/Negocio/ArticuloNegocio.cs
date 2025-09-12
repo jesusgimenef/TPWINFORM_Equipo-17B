@@ -8,7 +8,7 @@ using Dominio;
 
 namespace Negocio
 {
-    internal class ArticuloNegocio
+    public class ArticuloNegocio
     {
         public List<Articulo> listar()
         {
@@ -32,7 +32,7 @@ namespace Negocio
 
                     aux.Categoria = new Categoria();
                     aux.Categoria.Descripcion = (string)datos.Lector["Categoria"];
-                    aux.Precio = (int)datos.Lector["Precio"];
+                    aux.Precio = (decimal)datos.Lector["Precio"];
 
                     lista.Add(aux);
                 }
