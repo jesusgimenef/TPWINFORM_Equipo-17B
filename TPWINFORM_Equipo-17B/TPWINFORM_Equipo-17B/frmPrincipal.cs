@@ -25,14 +25,19 @@ namespace TPWINFORM_Equipo_17B
 
         private void frmPrincipal_Load(object sender, EventArgs e)
         {
+            cargar();
+        }
+
+        private void cargar()
+        {
             ArticuloNegocio negocio = new ArticuloNegocio();
             try
             {
                 listaArticulos = (negocio.listar());
                 dgvArticulos.DataSource = listaArticulos;
                 //dgvArticulos.Columns["UrlImagen"].Visible = false;
-                dgvArticulos.Columns["Marca"].Visible = false;     
-                dgvArticulos.Columns["Categoria"].Visible = false;   
+                dgvArticulos.Columns["Marca"].Visible = false;
+                dgvArticulos.Columns["Categoria"].Visible = false;
 
                 dgvArticulos.Columns["MarcaDescripcion"].HeaderText = "Marca";
                 dgvArticulos.Columns["CategoriaDescripcion"].HeaderText = "Categoria";
@@ -109,6 +114,27 @@ namespace TPWINFORM_Equipo_17B
         {
             frmAltaArticulo alta = new frmAltaArticulo();
             alta.ShowDialog();
+            cargar();
+        }
+
+        private void btnEliminarFisico_Click(object sender, EventArgs e)
+        {
+            ArticuloNegocio negocio = new ArticuloNegocio();
+            Articulo seleccionado;
+            try
+            {
+                DialogResult respuesta = MessageBox.Show("¿Estas seguro que queres eliminar el Articulo?", "Eliminando", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if(respuesta == DialogResult.Yes)
+                {
+                    seleccionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
+                    negocio.Eliminar(seleccionado.Id);
+                }
+                    return;
+            }
+            catch (Exception ex)
+            {   
+                MessageBox.Show(ex.ToString());
+            }
         }
     }
 }

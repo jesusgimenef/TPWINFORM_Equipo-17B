@@ -79,10 +79,10 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
-    public void Agregar(Articulo nuevo)
+        public void Agregar(Articulo nuevo)
         {
-            AccesoDatos datos = new AccesoDatos();
 
+           AccesoDatos datos = new AccesoDatos();
             try
             {
                 datos.setearConsulta("INSERT INTO ARTICULOS (Codigo, Nombre, Descripcion, IdMarca, IdCategoria, Precio) " +
@@ -104,6 +104,24 @@ namespace Negocio
                     datosImg.setearParametro("@ImagenUrl", nuevo.UrlImagen);
                     datosImg.ejecutarAccion();
                 }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+        public void Eliminar(int id)
+        {
+           AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("DELETE FROM ARTICULOS WHERE Id = @Id");
+                datos.setearParametro("@Id", id);
+                datos.ejecutarAccion();
             }
             catch (Exception ex)
             {
