@@ -17,25 +17,51 @@ namespace Negocio
 
             try
             {
-                datos.setearConsulta("SELECT A.Id,A.Codigo,A.Nombre,A.Descripcion,M.Id AS IdMarca,M.Descripcion AS Marca,C.Id AS IdCategoria,C.Descripcion AS Categoria,A.Precio,(SELECT TOP 1 ImagenUrl FROM IMAGENES I WHERE I.IdArticulo = A.Id) AS UrlImagen FROM ARTICULOS A INNER JOIN MARCAS M ON A.IdMarca = M.Id INNER JOIN CATEGORIAS C ON A.IdCategoria = C.Id;");
+                datos.setearConsulta("SELECT A.Id, A.Codigo, A.Nombre, A.Descripcion, M.Id AS IdMarca, M.Descripcion AS Marca, C.Id AS IdCategoria, C.Descripcion AS Categoria, A.Precio FROM ARTICULOS A, MARCAS M, CATEGORIAS C WHERE A.IdMarca = M.Id AND A.IdCategoria = C.Id;\r\n");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
                 {
                     Articulo aux = new Articulo();
+                    aux.Id = (int)datos.Lector["Id"];
                     aux.Codigo = (string)datos.Lector["Codigo"];
                     aux.Nombre = (string)datos.Lector["Nombre"];
                     aux.Descripcion = (string)datos.Lector["Descripcion"];
 
                     aux.Marca = new Marca();
+                    aux.Marca.Id = (int)datos.Lector["IdMarca"];
                     aux.Marca.Descripcion = (string)datos.Lector["Marca"];
 
                     aux.Categoria = new Categoria();
+                    aux.Categoria.Id = (int)datos.Lector["IdCategoria"];
                     aux.Categoria.Descripcion = (string)datos.Lector["Categoria"];
+
                     aux.Precio = (decimal)datos.Lector["Precio"];
-                    aux.UrlImagen = (string)datos.Lector["UrlImagen"];
+
+                    aux.Imagenes = new List<Imagen>();
 
                     lista.Add(aux);
+                }
+
+                datos.cerrarConexion();
+
+                foreach (Articulo art in lista)
+                {
+                    AccesoDatos datosImg = new AccesoDatos();
+                    datosImg.setearConsulta("SELECT Id, ImagenUrl FROM IMAGENES WHERE IdArticulo = @IdArticulo");
+                    datosImg.setearParametro("@IdArticulo", art.Id);
+                    datosImg.ejecutarLectura();
+
+                    while (datosImg.Lector.Read())
+                    {
+                        Imagen img = new Imagen();
+                        img.Id = (int)datosImg.Lector["Id"];
+                        img.Imagen_URL = (string)datosImg.Lector["ImagenUrl"];
+
+                        art.Imagenes.Add(img);
+                    }
+
+                    datosImg.cerrarConexion();
                 }
 
                 return lista;
