@@ -30,7 +30,7 @@ namespace TPWINFORM_Equipo_17B
             {
                 listaArticulos = (negocio.listar());
                 dgvArticulos.DataSource = listaArticulos;
-                dgvArticulos.Columns["UrlImagen"].Visible = false;
+                //dgvArticulos.Columns["UrlImagen"].Visible = false;
                 dgvArticulos.Columns["Marca"].Visible = false;     
                 dgvArticulos.Columns["Categoria"].Visible = false;   
 
@@ -41,7 +41,7 @@ namespace TPWINFORM_Equipo_17B
                 {
                     articuloSeleccionado = listaArticulos[0];
                     indiceImagenActual = 0;
-                    cargarImagen();
+                    mostrarImagen();
                 }
             }
             catch (Exception ex)
@@ -56,31 +56,32 @@ namespace TPWINFORM_Equipo_17B
             {
                 articuloSeleccionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
                 indiceImagenActual = 0;
-                cargarImagen();
+                mostrarImagen();
             }
         }
 
-        private void cargarImagen()
+        private void mostrarImagen()
+        {
+            if (articuloSeleccionado.Imagenes.Count > 0)
+                cargarImagen(articuloSeleccionado.Imagenes[indiceImagenActual].Imagen_URL);
+            else
+                cargarImagen("");
+
+            actualizarBotones();
+        }
+
+        private void cargarImagen(string url)
         {
             try
             {
-                if (articuloSeleccionado.Imagenes.Count > 0)
-                {
-                    pbxImagen.Load(articuloSeleccionado.Imagenes[indiceImagenActual].Imagen_URL);
-                }
-                else
-                {
-                    pbxImagen.Load("https://media.istockphoto.com/id/1128826884/vector/no-image-vector-symbol-missing-available-icon-no-gallery-for-this-moment.jpg?s=612x612&w=0&k=20&c=390e76zN_TJ7HZHJpnI7jNl7UBpO3UP7hpR2meE1Qd4=");
-                }
+                pbxImagen.Load(url);
             }
             catch
             {
                 pbxImagen.Load("https://media.istockphoto.com/id/1128826884/vector/no-image-vector-symbol-missing-available-icon-no-gallery-for-this-moment.jpg?s=612x612&w=0&k=20&c=390e76zN_TJ7HZHJpnI7jNl7UBpO3UP7hpR2meE1Qd4=");
             }
-
-            actualizarBotones();
         }
-        
+
         private void actualizarBotones()
         {
             btnAnterior.Enabled = indiceImagenActual > 0;
@@ -92,7 +93,7 @@ namespace TPWINFORM_Equipo_17B
             if (indiceImagenActual > 0)
             {
                 indiceImagenActual--;
-                cargarImagen();
+                mostrarImagen();
             }
         }
 
@@ -101,7 +102,7 @@ namespace TPWINFORM_Equipo_17B
             if (indiceImagenActual < articuloSeleccionado.Imagenes.Count - 1)
             {
                 indiceImagenActual++;
-                cargarImagen();
+                mostrarImagen();
             }
         }
         private void btnAgregar_Click(object sender, EventArgs e)

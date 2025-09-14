@@ -38,6 +38,7 @@ namespace Negocio
 
                     aux.Precio = (decimal)datos.Lector["Precio"];
 
+                    //aux.UrlImagen = (string) datos.Lector["UrlImagen"];
                     aux.Imagenes = new List<Imagen>();
 
                     lista.Add(aux);
@@ -60,6 +61,9 @@ namespace Negocio
 
                         art.Imagenes.Add(img);
                     }
+
+                    if (art.Imagenes.Count > 0)
+                        art.UrlImagen = art.Imagenes[0].Imagen_URL;
 
                     datosImg.cerrarConexion();
                 }
@@ -91,10 +95,23 @@ namespace Negocio
                 datos.setearParametro("@Precio", nuevo.Precio);
 
                 datos.ejecutarAccion();
+
+                if (!string.IsNullOrEmpty(nuevo.UrlImagen))
+                {
+                    AccesoDatos datosImg = new AccesoDatos();
+                    datosImg.setearConsulta("INSERT INTO IMAGENES (IdArticulo, ImagenUrl) " +
+                                            "VALUES ((SELECT MAX(Id) FROM ARTICULOS), @ImagenUrl)");
+                    datosImg.setearParametro("@ImagenUrl", nuevo.UrlImagen);
+                    datosImg.ejecutarAccion();
+                }
             }
             catch (Exception ex)
             {
                 throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
             }
         }
     }

@@ -31,27 +31,21 @@ namespace TPWINFORM_Equipo_17B
                 articulo.Marca = (Marca)cboMarca.SelectedItem;
                 articulo.Categoria = (Categoria)cboCategoria.SelectedItem;
                 articulo.Precio = decimal.Parse(txtPrecio.Text);
+                articulo.UrlImagen = txtImagen.Text;
 
                 negocio.Agregar(articulo);
+
                 MessageBox.Show("Artículo agregado correctamente.");
                 this.Close();
             }
             catch (Exception ex)
             {
-
                 MessageBox.Show("Error al guardar: " + ex.ToString());
             }
         }
-
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-
-        private void txtCodigo_TextChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void frmAltaArticulo_Load(object sender, EventArgs e)
@@ -75,7 +69,7 @@ namespace TPWINFORM_Equipo_17B
             }
         }
 
-        private void pbxImagen_Leave(object sender, EventArgs e)
+        private void txtImagen_Leave(object sender, EventArgs e)
         {
             try
             {
@@ -83,8 +77,16 @@ namespace TPWINFORM_Equipo_17B
             }
             catch
             {
-                pbxImagen.Load("https://via.placeholder.com/200x200?text=Sin+Imagen");
+                pbxImagen.Load("https://media.istockphoto.com/id/1128826884/vector/no-image-vector-symbol-missing-available-icon-no-gallery-for-this-moment.jpg?s=612x612&w=0&k=20&c=390e76zN_TJ7HZHJpnI7jNl7UBpO3UP7hpR2meE1Qd4=");
             }
+        }
+        private void txtCodigo_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+        private void pbxImagen_Leave(object sender, EventArgs e)
+        {
+
         }
     }
 }

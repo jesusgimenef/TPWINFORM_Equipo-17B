@@ -182,6 +182,7 @@
             this.txtImagen.Name = "txtImagen";
             this.txtImagen.Size = new System.Drawing.Size(153, 20);
             this.txtImagen.TabIndex = 15;
+            this.txtImagen.Leave += new System.EventHandler(this.txtImagen_Leave);
             // 
             // pbxImagen
             // 
