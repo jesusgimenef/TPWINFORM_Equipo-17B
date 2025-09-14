@@ -16,6 +16,7 @@ namespace TPWINFORM_Equipo_17B
         public frmPrincipal()
         {
             InitializeComponent();
+            cargarArticulos();
         }
 
         private void btnAgregar_Click(object sender, EventArgs e)
