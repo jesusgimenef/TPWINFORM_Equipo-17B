@@ -17,7 +17,7 @@ namespace Negocio
 
             try
             {
-                datos.setearConsulta("SELECT A.Id, A.Codigo, A.Nombre, A.Descripcion, M.Descripcion AS Marca, C.Descripcion AS Categoria, A.Precio FROM ARTICULOS A, MARCAS M, CATEGORIAS C WHERE A.IdMarca = M.Id AND A.IdCategoria = C.Id;");
+                datos.setearConsulta("SELECT A.Id,A.Codigo,A.Nombre,A.Descripcion,M.Id AS IdMarca,M.Descripcion AS Marca,C.Id AS IdCategoria,C.Descripcion AS Categoria,A.Precio,(SELECT TOP 1 ImagenUrl FROM IMAGENES I WHERE I.IdArticulo = A.Id) AS UrlImagen FROM ARTICULOS A INNER JOIN MARCAS M ON A.IdMarca = M.Id INNER JOIN CATEGORIAS C ON A.IdCategoria = C.Id;");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
@@ -33,6 +33,7 @@ namespace Negocio
                     aux.Categoria = new Categoria();
                     aux.Categoria.Descripcion = (string)datos.Lector["Categoria"];
                     aux.Precio = (decimal)datos.Lector["Precio"];
+                    aux.UrlImagen = (string)datos.Lector["UrlImagen"];
 
                     lista.Add(aux);
                 }

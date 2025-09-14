@@ -1,4 +1,5 @@
 ﻿using Negocio;
+using Dominio;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,25 +17,46 @@ namespace TPWINFORM_Equipo_17B
         public frmPrincipal()
         {
             InitializeComponent();
-            cargarArticulos();
+        }
+
+        private List<Articulo> listaArticulos;  
+
+        private void frmPrincipal_Load(object sender, EventArgs e)
+        {
+            ArticuloNegocio negocio = new ArticuloNegocio();
+            try
+            {
+                listaArticulos = (negocio.listar());
+                dgvArticulos.DataSource = listaArticulos;
+                dgvArticulos.Columns["UrlImagen"].Visible = false;
+                cargarImagen(listaArticulos[0].UrlImagen);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar artículos: " + ex.Message);
+            }
         }
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
             frmAltaArticulo alta = new frmAltaArticulo();
             alta.ShowDialog();
-            cargarArticulos();
         }
-    private void cargarArticulos()
+        private void dgvArticulos_SelectionChanged_1(object sender, EventArgs e)
         {
-            ArticuloNegocio negocio = new ArticuloNegocio();
+            Articulo seleccionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
+            cargarImagen(seleccionado.UrlImagen);
+        }
+
+        private void cargarImagen(string imagen)
+        {
             try
             {
-                dgvArticulos.DataSource = negocio.listar();
+                pbxImagen.Load(imagen);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MessageBox.Show("Error al cargar artículos: " + ex.Message);
+                pbxImagen.Load("https://media.istockphoto.com/id/1128826884/vector/no-image-vector-symbol-missing-available-icon-no-gallery-for-this-moment.jpg?s=612x612&w=0&k=20&c=390e76zN_TJ7HZHJpnI7jNl7UBpO3UP7hpR2meE1Qd4=");
             }
         }
     }
