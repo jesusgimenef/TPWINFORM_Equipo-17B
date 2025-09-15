@@ -14,28 +14,43 @@ namespace TPWINFORM_Equipo_17B
 {
     public partial class frmAltaArticulo : Form
     {
+        private Articulo articuloEnEdicion;
         public frmAltaArticulo()
         {
             InitializeComponent();
         }
 
+        public frmAltaArticulo(Articulo articulo) : this()
+        {
+            articuloEnEdicion = articulo;
+        }
+
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            Articulo articulo = new Articulo();
             ArticuloNegocio negocio = new ArticuloNegocio();
             try
             {
-                articulo.Codigo = txtCodigo.Text;
-                articulo.Nombre = txtNombre.Text;
-                articulo.Descripcion = txtDescripcion.Text;
-                articulo.Marca = (Marca)cboMarca.SelectedItem;
-                articulo.Categoria = (Categoria)cboCategoria.SelectedItem;
-                articulo.Precio = decimal.Parse(txtPrecio.Text);
-                articulo.UrlImagen = txtImagen.Text;
+                if (articuloEnEdicion == null)
+                    articuloEnEdicion = new Articulo();
 
-                negocio.Agregar(articulo);
+                articuloEnEdicion.Codigo = txtCodigo.Text;
+                articuloEnEdicion.Nombre = txtNombre.Text;
+                articuloEnEdicion.Descripcion = txtDescripcion.Text;
+                articuloEnEdicion.Marca = (Marca)cboMarca.SelectedItem;
+                articuloEnEdicion.Categoria = (Categoria)cboCategoria.SelectedItem;
+                articuloEnEdicion.Precio = decimal.Parse(txtPrecio.Text);
+                articuloEnEdicion.UrlImagen = txtImagen.Text;
 
-                MessageBox.Show("Artículo agregado correctamente.");
+                if (articuloEnEdicion.Id > 0)
+                {
+                    negocio.Modificar(articuloEnEdicion);
+                    MessageBox.Show("Articulo modificado correctamente.");
+                }
+                else
+                {
+                    negocio.Agregar(articuloEnEdicion);
+                    MessageBox.Show("Articulo agregado correctamente.");
+                }
                 this.Close();
             }
             catch (Exception ex)
@@ -62,6 +77,20 @@ namespace TPWINFORM_Equipo_17B
                 cboCategoria.DataSource = categoriaNegocio.listar();
                 cboCategoria.DisplayMember = "Descripcion";
                 cboCategoria.ValueMember = "Id";
+
+                if (articuloEnEdicion != null)
+                {
+                    txtCodigo.Text = articuloEnEdicion.Codigo;
+                    txtNombre.Text = articuloEnEdicion.Nombre;
+                    txtDescripcion.Text = articuloEnEdicion.Descripcion;
+                    txtPrecio.Text = articuloEnEdicion.Precio.ToString();
+                    txtImagen.Text = articuloEnEdicion.UrlImagen;
+
+                    if (articuloEnEdicion.Marca != null)
+                        cboMarca.SelectedValue = articuloEnEdicion.Marca.Id;
+                    if (articuloEnEdicion.Categoria != null)
+                        cboCategoria.SelectedValue = articuloEnEdicion.Categoria.Id;
+                }
             }
             catch (Exception ex)
             {
