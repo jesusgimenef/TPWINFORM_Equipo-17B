@@ -71,7 +71,7 @@ namespace TPWINFORM_Equipo_17B
         private void inicializarFiltros()
         {
             cboCampo.Items.Clear();
-            cboCampo.Items.AddRange(new object[] { "Codigo", "Nombre", "Descripcion", "Marca", "Categoria" });
+            cboCampo.Items.AddRange(new object[] { "Codigo", "Nombre", "Descripcion", "Marca", "Categoria", "Precio" });
             if (cboCampo.Items.Count > 0)
                 cboCampo.SelectedIndex = 0;
         }
@@ -88,7 +88,22 @@ namespace TPWINFORM_Equipo_17B
 
         private void cboCampo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Busqueda simplificada: no hay criterios dependientes
+            // Muestra solo cuando el campo seleccionado es Precio
+            bool esPrecio = cboCampo.SelectedItem != null && cboCampo.SelectedItem.ToString() == "Precio";
+            cboPrecioCriterio.Visible = esPrecio;
+            if (esPrecio)
+            {
+                cboPrecioCriterio.Items.Clear();
+                cboPrecioCriterio.Items.AddRange(new object[] { "Mayor que", "Menor que", "Igual que", "Tiene dato", "No tiene dato" });
+                cboPrecioCriterio.SelectedIndex = 0;
+            }
+            txtFiltro.Enabled = !(esPrecio && (cboPrecioCriterio.SelectedItem != null && (cboPrecioCriterio.SelectedItem.ToString() == "Tiene dato" || cboPrecioCriterio.SelectedItem.ToString() == "No tiene dato")));
+        }
+
+        private void cboPrecioCriterio_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            bool deshabilitar = cboPrecioCriterio.SelectedItem != null && (cboPrecioCriterio.SelectedItem.ToString() == "Tiene dato" || cboPrecioCriterio.SelectedItem.ToString() == "No tiene dato");
+            txtFiltro.Enabled = !deshabilitar;
         }
 
         private void btnBuscar_Click(object sender, EventArgs e)
@@ -124,6 +139,28 @@ namespace TPWINFORM_Equipo_17B
                     break;
                 case "Categoria":
                     query = query.Where(a => (a.CategoriaDescripcion ?? string.Empty).ToLowerInvariant().Contains(v));
+                    break;
+                case "Precio":
+                    string criterio = cboPrecioCriterio.SelectedItem != null ? cboPrecioCriterio.SelectedItem.ToString() : string.Empty;
+                    if (criterio == "Tiene dato")
+                        query = query.Where(a => a.Precio > 0);
+                    else if (criterio == "No tiene dato")
+                        query = query.Where(a => a.Precio == 0);
+                    else
+                    {
+                        decimal numero;
+                        if (!decimal.TryParse(valor, out numero))
+                        {
+                            MessageBox.Show("Ingrese un numero valido para el precio.");
+                            return;
+                        }
+                        if (criterio == "Mayor que")
+                            query = query.Where(a => a.Precio > numero);
+                        else if (criterio == "Menor que")
+                            query = query.Where(a => a.Precio < numero);
+                        else // Igual que
+                            query = query.Where(a => a.Precio == numero);
+                    }
                     break;
             }
 

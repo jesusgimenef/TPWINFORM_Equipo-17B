@@ -39,6 +39,7 @@
             this.btnBuscar = new System.Windows.Forms.Button();
             this.btnLimpiar = new System.Windows.Forms.Button();
             this.btnEditar = new System.Windows.Forms.Button();
+            this.cboPrecioCriterio = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvArticulos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxImagen)).BeginInit();
             this.SuspendLayout();
@@ -123,9 +124,9 @@
             // 
             // txtFiltro
             // 
-            this.txtFiltro.Location = new System.Drawing.Point(149, 22);
+            this.txtFiltro.Location = new System.Drawing.Point(276, 22);
             this.txtFiltro.Name = "txtFiltro";
-            this.txtFiltro.Size = new System.Drawing.Size(270, 20);
+            this.txtFiltro.Size = new System.Drawing.Size(143, 20);
             this.txtFiltro.TabIndex = 8;
             // 
             // btnBuscar
@@ -148,6 +149,17 @@
             this.btnLimpiar.UseVisualStyleBackColor = true;
             this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
             // 
+            // cboPrecioCriterio
+            // 
+            this.cboPrecioCriterio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboPrecioCriterio.FormattingEnabled = true;
+            this.cboPrecioCriterio.Location = new System.Drawing.Point(149, 21);
+            this.cboPrecioCriterio.Name = "cboPrecioCriterio";
+            this.cboPrecioCriterio.Size = new System.Drawing.Size(121, 21);
+            this.cboPrecioCriterio.TabIndex = 11;
+            this.cboPrecioCriterio.Visible = false;
+            this.cboPrecioCriterio.SelectedIndexChanged += new System.EventHandler(this.cboPrecioCriterio_SelectedIndexChanged);
+            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -155,6 +167,7 @@
             this.ClientSize = new System.Drawing.Size(1191, 450);
             this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.btnBuscar);
+            this.Controls.Add(this.cboPrecioCriterio);
             this.Controls.Add(this.txtFiltro);
             this.Controls.Add(this.cboCampo);
             this.Controls.Add(this.btnEditar);
@@ -187,5 +200,6 @@
         private System.Windows.Forms.TextBox txtFiltro;
         private System.Windows.Forms.Button btnBuscar;
         private System.Windows.Forms.Button btnLimpiar;
+        private System.Windows.Forms.ComboBox cboPrecioCriterio;
     }
 }
