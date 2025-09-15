@@ -258,5 +258,21 @@ namespace TPWINFORM_Equipo_17B
             editar.ShowDialog();
             cargar();
         }
+
+        private void dgvArticulos_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && dgvArticulos.CurrentRow != null)
+            {
+                Articulo articuloSeleccionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
+
+                // Recargar imágenes completas
+                ArticuloNegocio negocio = new ArticuloNegocio();
+                articuloSeleccionado = negocio.listar()
+                    .FirstOrDefault(a => a.Id == articuloSeleccionado.Id);
+
+                frmDetalleProducto detalle = new frmDetalleProducto(articuloSeleccionado);
+                detalle.ShowDialog();
+            }
+        }
     }
 }
