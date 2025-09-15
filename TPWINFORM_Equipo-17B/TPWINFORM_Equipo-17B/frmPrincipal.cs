@@ -15,6 +15,7 @@ namespace TPWINFORM_Equipo_17B
     public partial class frmPrincipal : Form
     {
         private List<Articulo> listaArticulos;
+        private List<Articulo> listaArticulosOriginal;
         private Articulo articuloSeleccionado;
         private int indiceImagenActual = 0;
 
@@ -25,6 +26,7 @@ namespace TPWINFORM_Equipo_17B
 
         private void frmPrincipal_Load(object sender, EventArgs e)
         {
+            inicializarFiltros();
             cargar();
         }
 
@@ -33,26 +35,45 @@ namespace TPWINFORM_Equipo_17B
             ArticuloNegocio negocio = new ArticuloNegocio();
             try
             {
-                listaArticulos = (negocio.listar());
-                dgvArticulos.DataSource = listaArticulos;
-                //dgvArticulos.Columns["UrlImagen"].Visible = false;
-                dgvArticulos.Columns["Marca"].Visible = false;
-                dgvArticulos.Columns["Categoria"].Visible = false;
-
-                dgvArticulos.Columns["MarcaDescripcion"].HeaderText = "Marca";
-                dgvArticulos.Columns["CategoriaDescripcion"].HeaderText = "Categoria";
-
-                if (listaArticulos.Count > 0)
-                {
-                    articuloSeleccionado = listaArticulos[0];
-                    indiceImagenActual = 0;
-                    mostrarImagen();
-                }
+                listaArticulosOriginal = negocio.listar();
+                listaArticulos = new List<Articulo>(listaArticulosOriginal);
+                refrescarGrid(listaArticulos);
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error al cargar artículos: " + ex.Message);
             }
+        }
+
+        private void refrescarGrid(List<Articulo> fuente)
+        {
+            dgvArticulos.DataSource = null;
+            dgvArticulos.DataSource = fuente;
+            //dgvArticulos.Columns["UrlImagen"].Visible = false;
+            if (dgvArticulos.Columns.Contains("Marca"))
+                dgvArticulos.Columns["Marca"].Visible = false;
+            if (dgvArticulos.Columns.Contains("Categoria"))
+                dgvArticulos.Columns["Categoria"].Visible = false;
+
+            if (dgvArticulos.Columns.Contains("MarcaDescripcion"))
+                dgvArticulos.Columns["MarcaDescripcion"].HeaderText = "Marca";
+            if (dgvArticulos.Columns.Contains("CategoriaDescripcion"))
+                dgvArticulos.Columns["CategoriaDescripcion"].HeaderText = "Categoria";
+
+            if (fuente != null && fuente.Count > 0)
+            {
+                articuloSeleccionado = fuente[0];
+                indiceImagenActual = 0;
+                mostrarImagen();
+            }
+        }
+
+        private void inicializarFiltros()
+        {
+            cboCampo.Items.Clear();
+            cboCampo.Items.AddRange(new object[] { "Codigo", "Nombre", "Descripcion", "Marca", "Categoria" });
+            if (cboCampo.Items.Count > 0)
+                cboCampo.SelectedIndex = 0;
         }
 
         private void dgvArticulos_SelectionChanged_1(object sender, EventArgs e)
@@ -63,6 +84,59 @@ namespace TPWINFORM_Equipo_17B
                 indiceImagenActual = 0;
                 mostrarImagen();
             }
+        }
+
+        private void cboCampo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Busqueda simplificada: no hay criterios dependientes
+        }
+
+        private void btnBuscar_Click(object sender, EventArgs e)
+        {
+            if (listaArticulosOriginal == null)
+                return;
+
+            string campo = cboCampo.SelectedItem != null ? cboCampo.SelectedItem.ToString() : string.Empty;
+            string valor = (txtFiltro.Text ?? string.Empty).Trim();
+
+            if (string.IsNullOrEmpty(valor))
+            {
+                listaArticulos = new List<Articulo>(listaArticulosOriginal);
+                refrescarGrid(listaArticulos);
+                return;
+            }
+
+            string v = valor.ToLowerInvariant();
+            IEnumerable<Articulo> query = listaArticulosOriginal;
+            switch (campo)
+            {
+                case "Codigo":
+                    query = query.Where(a => (a.Codigo ?? string.Empty).ToLowerInvariant().Contains(v));
+                    break;
+                case "Nombre":
+                    query = query.Where(a => (a.Nombre ?? string.Empty).ToLowerInvariant().Contains(v));
+                    break;
+                case "Descripcion":
+                    query = query.Where(a => (a.Descripcion ?? string.Empty).ToLowerInvariant().Contains(v));
+                    break;
+                case "Marca":
+                    query = query.Where(a => (a.MarcaDescripcion ?? string.Empty).ToLowerInvariant().Contains(v));
+                    break;
+                case "Categoria":
+                    query = query.Where(a => (a.CategoriaDescripcion ?? string.Empty).ToLowerInvariant().Contains(v));
+                    break;
+            }
+
+            listaArticulos = query.ToList();
+            refrescarGrid(listaArticulos);
+        }
+
+        private void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            txtFiltro.Text = string.Empty;
+            if (cboCampo.Items.Count > 0)
+                cboCampo.SelectedIndex = 0;
+            cargar();
         }
 
         private void mostrarImagen()
