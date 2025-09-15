@@ -210,5 +210,16 @@ namespace TPWINFORM_Equipo_17B
                 MessageBox.Show(ex.ToString());
             }
         }
+
+        private void btnEditar_Click(object sender, EventArgs e)
+        {
+            if (dgvArticulos.CurrentRow == null)
+                return;
+
+            Articulo seleccionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
+            frmAltaArticulo editar = new frmAltaArticulo(seleccionado);
+            editar.ShowDialog();
+            cargar();
+        }
     }
 }
