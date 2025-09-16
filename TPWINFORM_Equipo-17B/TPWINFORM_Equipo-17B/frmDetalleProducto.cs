@@ -40,7 +40,6 @@ namespace TPWINFORM_Equipo_17B
             txtMarca.Text = _producto.MarcaDescripcion;
             txtCategoria.Text = _producto.CategoriaDescripcion;
 
-            indiceImagenActual = 0;
             MostrarImagen();
         }
 

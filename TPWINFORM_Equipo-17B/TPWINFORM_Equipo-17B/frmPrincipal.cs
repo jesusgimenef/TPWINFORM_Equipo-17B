@@ -49,7 +49,7 @@ namespace TPWINFORM_Equipo_17B
         {
             dgvArticulos.DataSource = null;
             dgvArticulos.DataSource = fuente;
-            //dgvArticulos.Columns["UrlImagen"].Visible = false;
+            dgvArticulos.Columns["UrlImagen"].Visible = false;
             if (dgvArticulos.Columns.Contains("Marca"))
                 dgvArticulos.Columns["Marca"].Visible = false;
             if (dgvArticulos.Columns.Contains("Categoria"))
@@ -264,11 +264,6 @@ namespace TPWINFORM_Equipo_17B
             if (e.RowIndex >= 0 && dgvArticulos.CurrentRow != null)
             {
                 Articulo articuloSeleccionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
-
-                // Recargar imágenes completas
-                ArticuloNegocio negocio = new ArticuloNegocio();
-                articuloSeleccionado = negocio.listar()
-                    .FirstOrDefault(a => a.Id == articuloSeleccionado.Id);
 
                 frmDetalleProducto detalle = new frmDetalleProducto(articuloSeleccionado);
                 detalle.ShowDialog();
