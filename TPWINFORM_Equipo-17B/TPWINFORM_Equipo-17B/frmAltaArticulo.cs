@@ -14,6 +14,7 @@ namespace TPWINFORM_Equipo_17B
 {
     public partial class frmAltaArticulo : Form
     {
+
         private Articulo articuloEnEdicion;
         public frmAltaArticulo()
         {
@@ -24,12 +25,66 @@ namespace TPWINFORM_Equipo_17B
         {
             articuloEnEdicion = articulo;
         }
+        private bool validarArticulo()
+        {
+            if (string.IsNullOrWhiteSpace(txtCodigo.Text))
+            {
+                MessageBox.Show("El código no puede estar vacío.");
+                return false;
+            }
 
+            if (string.IsNullOrWhiteSpace(txtDescripcion.Text))
+            {
+                MessageBox.Show("La descripción no puede estar vacía.");
+                return false;
+            }
+
+            if (txtDescripcion.Text.Trim().Length < 2 || txtDescripcion.Text.All(char.IsDigit))
+            {
+                MessageBox.Show("La descripción debe tener al menos 2 caracteres y no puede ser solo números.");
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(txtNombre.Text))
+            {
+                MessageBox.Show("El nombre no puede estar vacío.");
+                return false;
+            }
+            if (txtNombre.Text.Any(char.IsDigit))
+            {
+                MessageBox.Show("El nombre no puede contener números.");
+                return false;
+            }
+
+
+            if (string.IsNullOrWhiteSpace(txtPrecio.Text))
+            {
+                MessageBox.Show("Debe ingresar un precio.");
+                return false;
+            }
+
+            decimal precio;
+            if (!decimal.TryParse(txtPrecio.Text, out precio))
+            {
+                MessageBox.Show("El precio debe ser un número válido.");
+                return false;
+            }
+            if (precio <= 0)
+            {
+                MessageBox.Show("El precio debe ser mayor a 0.");
+                return false;
+            }
+
+            return true;
+        }
         private void btnAceptar_Click(object sender, EventArgs e)
         {
             ArticuloNegocio negocio = new ArticuloNegocio();
             try
             {
+                if (!validarArticulo())
+                    return;
+
                 if (articuloEnEdicion == null)
                     articuloEnEdicion = new Articulo();
 
