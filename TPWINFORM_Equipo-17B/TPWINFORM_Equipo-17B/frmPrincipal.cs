@@ -239,6 +239,8 @@ namespace TPWINFORM_Equipo_17B
                 {
                     seleccionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
                     negocio.Eliminar(seleccionado.Id);
+                    MessageBox.Show("Artículo eliminado correctamente");
+                    cargar();
                 }
                     return;
             }
