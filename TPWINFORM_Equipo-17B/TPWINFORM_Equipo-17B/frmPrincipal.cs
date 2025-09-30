@@ -49,9 +49,12 @@ namespace TPWINFORM_Equipo_17B
         {
             dgvArticulos.DataSource = null;
             dgvArticulos.DataSource = fuente;
+
             dgvArticulos.Columns["UrlImagen"].Visible = false;
+
             if (dgvArticulos.Columns.Contains("Marca"))
                 dgvArticulos.Columns["Marca"].Visible = false;
+
             if (dgvArticulos.Columns.Contains("Categoria"))
                 dgvArticulos.Columns["Categoria"].Visible = false;
 
@@ -231,20 +234,27 @@ namespace TPWINFORM_Equipo_17B
         private void btnEliminarFisico_Click(object sender, EventArgs e)
         {
             ArticuloNegocio negocio = new ArticuloNegocio();
-            Articulo seleccionado;
             try
             {
-                DialogResult respuesta = MessageBox.Show("¿Estas seguro que queres eliminar el Articulo?", "Eliminando", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                Articulo seleccionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem; ;
+                if (seleccionado == null) return;
+                   
+                DialogResult respuesta = MessageBox.Show(
+                    "¿Estas seguro que queres eliminar el Articulo?", 
+                    "Eliminando", 
+                    MessageBoxButtons.YesNo, 
+                    MessageBoxIcon.Warning
+                );
+                
                 if(respuesta == DialogResult.Yes)
                 {
-                    seleccionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
                     negocio.Eliminar(seleccionado.Id);
+                    cargar();
                 }
-                    return;
             }
             catch (Exception ex)
             {   
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show("Error al eliminar un articulo: " + ex.ToString());
             }
         }
 
@@ -264,6 +274,11 @@ namespace TPWINFORM_Equipo_17B
             if (e.RowIndex >= 0 && dgvArticulos.CurrentRow != null)
             {
                 Articulo articuloSeleccionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
+
+                // Recargar imágenes completas
+                ArticuloNegocio negocio = new ArticuloNegocio();
+                articuloSeleccionado = negocio.listar()
+                    .FirstOrDefault(a => a.Id == articuloSeleccionado.Id);
 
                 frmDetalleProducto detalle = new frmDetalleProducto(articuloSeleccionado);
                 detalle.ShowDialog();
