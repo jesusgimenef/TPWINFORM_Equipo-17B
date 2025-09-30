@@ -49,7 +49,7 @@ namespace TPWINFORM_Equipo_17B
         {
             dgvArticulos.DataSource = null;
             dgvArticulos.DataSource = fuente;
-            //dgvArticulos.Columns["UrlImagen"].Visible = false;
+            dgvArticulos.Columns["UrlImagen"].Visible = false;
             if (dgvArticulos.Columns.Contains("Marca"))
                 dgvArticulos.Columns["Marca"].Visible = false;
             if (dgvArticulos.Columns.Contains("Categoria"))
@@ -257,6 +257,29 @@ namespace TPWINFORM_Equipo_17B
             frmAltaArticulo editar = new frmAltaArticulo(seleccionado);
             editar.ShowDialog();
             cargar();
+        }
+
+        private void dgvArticulos_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && dgvArticulos.CurrentRow != null)
+            {
+                Articulo articuloSeleccionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
+
+                frmDetalleProducto detalle = new frmDetalleProducto(articuloSeleccionado);
+                detalle.ShowDialog();
+            }
+        }
+
+        private void btnGestionarMarcas_Click(object sender, EventArgs e)
+        {
+            frmAltaMarca frmMarca = new frmAltaMarca();
+            frmMarca.ShowDialog();
+        }
+
+        private void btnGestionarCategorias_Click(object sender, EventArgs e)
+        {
+            frmAltaCategoria frmCategoria = new frmAltaCategoria();
+            frmCategoria.ShowDialog();
         }
     }
 }

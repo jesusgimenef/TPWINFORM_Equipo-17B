@@ -19,6 +19,8 @@ namespace Negocio
 
             public AccesoDatos()
             {
+                // Intentar primero con esta cadena de conexión
+                // Si no funciona, prueba con: server=.\\SQLEXPRESS o server=(localdb)\\MSSQLLocalDB
                 conexion = new SqlConnection("server=.; database=CATALOGO_P3_DB; integrated security=true");
                 comando = new SqlCommand();
             }
