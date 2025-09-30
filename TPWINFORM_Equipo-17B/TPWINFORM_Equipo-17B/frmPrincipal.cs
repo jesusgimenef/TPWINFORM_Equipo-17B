@@ -269,5 +269,17 @@ namespace TPWINFORM_Equipo_17B
                 detalle.ShowDialog();
             }
         }
+
+        private void btnGestionarMarcas_Click(object sender, EventArgs e)
+        {
+            frmAltaMarca frmMarca = new frmAltaMarca();
+            frmMarca.ShowDialog();
+        }
+
+        private void btnGestionarCategorias_Click(object sender, EventArgs e)
+        {
+            frmAltaCategoria frmCategoria = new frmAltaCategoria();
+            frmCategoria.ShowDialog();
+        }
     }
 }

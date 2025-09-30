@@ -40,6 +40,8 @@
             this.btnLimpiar = new System.Windows.Forms.Button();
             this.btnEditar = new System.Windows.Forms.Button();
             this.cboPrecioCriterio = new System.Windows.Forms.ComboBox();
+            this.btnGestionarMarcas = new System.Windows.Forms.Button();
+            this.btnGestionarCategorias = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvArticulos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxImagen)).BeginInit();
             this.SuspendLayout();
@@ -161,11 +163,33 @@
             this.cboPrecioCriterio.Visible = false;
             this.cboPrecioCriterio.SelectedIndexChanged += new System.EventHandler(this.cboPrecioCriterio_SelectedIndexChanged);
             // 
+            // btnGestionarMarcas
+            // 
+            this.btnGestionarMarcas.Location = new System.Drawing.Point(373, 398);
+            this.btnGestionarMarcas.Name = "btnGestionarMarcas";
+            this.btnGestionarMarcas.Size = new System.Drawing.Size(120, 30);
+            this.btnGestionarMarcas.TabIndex = 12;
+            this.btnGestionarMarcas.Text = "Gestionar Marcas";
+            this.btnGestionarMarcas.UseVisualStyleBackColor = true;
+            this.btnGestionarMarcas.Click += new System.EventHandler(this.btnGestionarMarcas_Click);
+            // 
+            // btnGestionarCategorias
+            // 
+            this.btnGestionarCategorias.Location = new System.Drawing.Point(499, 398);
+            this.btnGestionarCategorias.Name = "btnGestionarCategorias";
+            this.btnGestionarCategorias.Size = new System.Drawing.Size(140, 30);
+            this.btnGestionarCategorias.TabIndex = 13;
+            this.btnGestionarCategorias.Text = "Gestionar Categorías";
+            this.btnGestionarCategorias.UseVisualStyleBackColor = true;
+            this.btnGestionarCategorias.Click += new System.EventHandler(this.btnGestionarCategorias_Click);
+            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1191, 450);
+            this.Controls.Add(this.btnGestionarCategorias);
+            this.Controls.Add(this.btnGestionarMarcas);
             this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.btnBuscar);
             this.Controls.Add(this.cboPrecioCriterio);
@@ -202,5 +226,7 @@
         private System.Windows.Forms.Button btnBuscar;
         private System.Windows.Forms.Button btnLimpiar;
         private System.Windows.Forms.ComboBox cboPrecioCriterio;
+        private System.Windows.Forms.Button btnGestionarMarcas;
+        private System.Windows.Forms.Button btnGestionarCategorias;
     }
 }
