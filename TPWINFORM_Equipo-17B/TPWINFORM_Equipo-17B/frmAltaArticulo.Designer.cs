@@ -50,6 +50,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.btnAnterior = new System.Windows.Forms.Button();
             this.btnSiguiente = new System.Windows.Forms.Button();
+            this.btnEliminarUrlImg = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pbxImagen)).BeginInit();
             this.SuspendLayout();
             // 
@@ -191,7 +192,7 @@
             // 
             // pbxImagen
             // 
-            this.pbxImagen.Location = new System.Drawing.Point(290, 59);
+            this.pbxImagen.Location = new System.Drawing.Point(319, 62);
             this.pbxImagen.Name = "pbxImagen";
             this.pbxImagen.Size = new System.Drawing.Size(200, 210);
             this.pbxImagen.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -232,7 +233,7 @@
             // 
             // btnAnterior
             // 
-            this.btnAnterior.Location = new System.Drawing.Point(305, 276);
+            this.btnAnterior.Location = new System.Drawing.Point(327, 276);
             this.btnAnterior.Name = "btnAnterior";
             this.btnAnterior.Size = new System.Drawing.Size(85, 23);
             this.btnAnterior.TabIndex = 22;
@@ -242,7 +243,7 @@
             // 
             // btnSiguiente
             // 
-            this.btnSiguiente.Location = new System.Drawing.Point(396, 276);
+            this.btnSiguiente.Location = new System.Drawing.Point(418, 276);
             this.btnSiguiente.Name = "btnSiguiente";
             this.btnSiguiente.Size = new System.Drawing.Size(85, 23);
             this.btnSiguiente.TabIndex = 23;
@@ -250,11 +251,23 @@
             this.btnSiguiente.UseVisualStyleBackColor = true;
             this.btnSiguiente.Click += new System.EventHandler(this.btnSiguiente_Click);
             // 
+            // btnEliminarUrlImg
+            // 
+            this.btnEliminarUrlImg.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnEliminarUrlImg.Location = new System.Drawing.Point(288, 216);
+            this.btnEliminarUrlImg.Name = "btnEliminarUrlImg";
+            this.btnEliminarUrlImg.Size = new System.Drawing.Size(25, 22);
+            this.btnEliminarUrlImg.TabIndex = 24;
+            this.btnEliminarUrlImg.Text = "-";
+            this.btnEliminarUrlImg.UseVisualStyleBackColor = true;
+            this.btnEliminarUrlImg.Click += new System.EventHandler(this.btnEliminarUrlImg_Click);
+            // 
             // frmAltaArticulo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(531, 391);
+            this.Controls.Add(this.btnEliminarUrlImg);
             this.Controls.Add(this.btnSiguiente);
             this.Controls.Add(this.btnAnterior);
             this.Controls.Add(this.label1);
@@ -310,5 +323,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnAnterior;
         private System.Windows.Forms.Button btnSiguiente;
+        private System.Windows.Forms.Button btnEliminarUrlImg;
     }
 }
