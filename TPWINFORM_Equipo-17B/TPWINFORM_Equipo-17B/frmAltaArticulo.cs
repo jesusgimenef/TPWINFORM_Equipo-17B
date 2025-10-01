@@ -162,7 +162,16 @@ namespace TPWINFORM_Equipo_17B
         }
         private void txtUrlImagen_Leave(object sender, EventArgs e)
         {
-            cargarImagen(txtUrlImagen.Text);
+            string url = txtUrlImagen.Text.Trim();
+
+            if (!string.IsNullOrEmpty(url) && !EsUrlImagenWeb(url))
+            {
+                MessageBox.Show("La URL ingresada no parece ser de una imagen válida.",
+                                "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            cargarImagen(url);
         }
         private void txtCodigo_TextChanged(object sender, EventArgs e)
         {
@@ -184,28 +193,35 @@ namespace TPWINFORM_Equipo_17B
         }
         private void btnAddUrlImg_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(txtUrlImagen.Text))
+            string url = txtUrlImagen.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(url))
+                return;
+
+            if (!EsUrlImagenWeb(url))
             {
-                Imagen img = new Imagen()
-                {
-                    Imagen_URL = txtUrlImagen.Text.Trim()
-                };
-
-                // Crear un Item en la ListView
-                ListViewItem item = new ListViewItem(img.Imagen_URL);
-                item.Tag = img;
-
-                listImg.Items.Add(item);
-
-                // Si es la primera imagen, mostrarla
-                if (listImg.Items.Count == 1)
-                {
-                    indiceImagen = 0;
-                    cargarImagen(img.Imagen_URL);
-                }
-
-                txtUrlImagen.Clear();
+                MessageBox.Show("La URL ingresada no es válida o no corresponde a una imagen.",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
+
+            Imagen img = new Imagen()
+            {
+                Imagen_URL = url
+            };
+
+            ListViewItem item = new ListViewItem(img.Imagen_URL);
+            item.Tag = img;
+
+            listImg.Items.Add(item);
+
+            if (listImg.Items.Count == 1)
+            {
+                indiceImagen = 0;
+                cargarImagen(img.Imagen_URL);
+            }
+
+            txtUrlImagen.Clear();
         }
         private void listImg_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -220,31 +236,76 @@ namespace TPWINFORM_Equipo_17B
         {
             if (listImg.Items.Count == 0) return;
 
-            indiceImagen = (indiceImagen + 1) % listImg.Items.Count;
+            indiceImagen = (indiceImagen - 1 + listImg.Items.Count) % listImg.Items.Count;
             listImg.Items[indiceImagen].Selected = true;
+
+            if (listImg.Items[indiceImagen].Tag is Imagen img)
+                cargarImagen(img.Imagen_URL);
+            else
+                cargarImagen(listImg.Items[indiceImagen].Text);
         }
         private void btnSiguiente_Click(object sender, EventArgs e)
         {
-            if (listImg.Items.Count == 0) return;
+                if (listImg.Items.Count == 0) return;
 
-            indiceImagen = (indiceImagen - 1 + listImg.Items.Count) % listImg.Items.Count;
-            listImg.Items[indiceImagen].Selected = true;
+                indiceImagen = (indiceImagen + 1) % listImg.Items.Count;
+                listImg.Items[indiceImagen].Selected = true;
+
+                if (listImg.Items[indiceImagen].Tag is Imagen img)
+                    cargarImagen(img.Imagen_URL);
+                else
+                    cargarImagen(listImg.Items[indiceImagen].Text);
         }
         private bool EsUrlImagenWeb(string url)
         {
             if (string.IsNullOrWhiteSpace(url))
-                return true; // vacío es válido
+                return false;
 
             if (!Uri.TryCreate(url, UriKind.Absolute, out Uri uriResult))
                 return false;
 
-            if (uriResult.Scheme != Uri.UriSchemeHttp && uriResult.Scheme != Uri.UriSchemeHttps)
-                return false;
+            return uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps;
+        }
 
-            string[] extensionesValidas = { ".jpg", ".jpeg", ".png", ".gif", ".bmp", ".webp" };
-            string extension = System.IO.Path.GetExtension(uriResult.AbsolutePath).ToLower();
+        private void btnEliminarUrlImg_Click(object sender, EventArgs e)
+        {
+            if (listImg.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Seleccioná una imagen para eliminar.");
+                return;
+            }
 
-            return extensionesValidas.Contains(extension);
+            ListViewItem selectedItem = listImg.SelectedItems[0];
+            string urlAEliminar = selectedItem.Text;
+            int indiceSeleccionado = selectedItem.Index;
+
+            if (articuloEnEdicion?.Imagenes != null)
+            {
+                var imgAEliminar = articuloEnEdicion.Imagenes
+                    .FirstOrDefault(i => string.Equals(i.Imagen_URL?.Trim(), urlAEliminar?.Trim(), StringComparison.OrdinalIgnoreCase));
+
+                if (imgAEliminar != null)
+                {
+                    articuloEnEdicion.Imagenes.Remove(imgAEliminar);
+                    new ImgNegocio().Eliminar(imgAEliminar.Id);
+                }
+            }
+
+            listImg.Items.Remove(selectedItem);
+
+            if (listImg.Items.Count > 0)
+            {
+                if (indiceSeleccionado >= listImg.Items.Count)
+                    indiceSeleccionado = listImg.Items.Count - 1; 
+
+                listImg.Items[indiceSeleccionado].Selected = true;
+                var tagImg = listImg.Items[indiceSeleccionado].Tag as Imagen;
+                cargarImagen(tagImg?.Imagen_URL ?? listImg.Items[indiceSeleccionado].Text);
+            }
+            else
+            {
+                cargarImagen("");
+            }
         }
     }
 }

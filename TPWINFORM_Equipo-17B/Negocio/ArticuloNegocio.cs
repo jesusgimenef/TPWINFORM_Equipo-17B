@@ -131,6 +131,7 @@ namespace Negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
+                // Primero actualizo los datos del artículo
                 datos.setearConsulta("UPDATE ARTICULOS SET Codigo = @Codigo, Nombre = @Nombre, Descripcion = @Descripcion, IdMarca = @IdMarca, IdCategoria = @IdCategoria, Precio = @Precio WHERE Id = @Id");
                 datos.setearParametro("@Codigo", articulo.Codigo);
                 datos.setearParametro("@Nombre", articulo.Nombre);
@@ -140,6 +141,24 @@ namespace Negocio
                 datos.setearParametro("@Precio", articulo.Precio);
                 datos.setearParametro("@Id", articulo.Id);
                 datos.ejecutarAccion();
+                datos.cerrarConexion();
+                
+                AccesoDatos datosImg = new AccesoDatos();
+
+                datosImg.setearConsulta("DELETE FROM IMAGENES WHERE IdArticulo = @IdArticulo");
+                datosImg.setearParametro("@IdArticulo", articulo.Id);
+                datosImg.ejecutarAccion();
+                datosImg.cerrarConexion();
+                
+                foreach (Imagen img in articulo.Imagenes)
+                {
+                    AccesoDatos datosImgInsert = new AccesoDatos();
+                    datosImgInsert.setearConsulta("INSERT INTO IMAGENES (IdArticulo, ImagenUrl) VALUES (@IdArticulo, @ImagenUrl)");
+                    datosImgInsert.setearParametro("@IdArticulo", articulo.Id);
+                    datosImgInsert.setearParametro("@ImagenUrl", img.Imagen_URL);
+                    datosImgInsert.ejecutarAccion();
+                    datosImgInsert.cerrarConexion();
+                }
             }
             catch (Exception ex)
             {
